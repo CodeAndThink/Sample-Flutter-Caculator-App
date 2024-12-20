@@ -17,40 +17,47 @@ class AppTheme {
         ),
         textTheme: const TextTheme(
             headlineLarge: TextStyle(
-              fontSize: 90,
+              fontFamily: 'WorkSans',
+              fontSize: 96,
               fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w300,
               color: Colors.black,
             ),
             headlineMedium: TextStyle(
+              fontFamily: 'WorkSans',
               fontSize: 40,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w300,
               color: Colors.black,
             ),
             headlineSmall: TextStyle(
+              fontFamily: 'WorkSans',
               fontSize: 32,
               fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w400,
               color: Colors.black,
             ),
             bodyLarge: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 96,
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w300,
                 color: Colors.black),
             bodyMedium: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 16,
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w400,
                 color: Colors.black),
             bodySmall: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 14,
                 fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w300,
                 color: Colors.black)),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
+            fontFamily: 'WorkSans',
             fontSize: 20.0,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -79,37 +86,43 @@ class AppTheme {
         ),
         textTheme: const TextTheme(
             headlineLarge: TextStyle(
-              fontSize: 90,
+              fontFamily: 'WorkSans',
+              fontSize: 96,
               fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w300,
               color: Colors.white,
             ),
             headlineMedium: TextStyle(
+              fontFamily: 'WorkSans',
               fontSize: 40,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w300,
               color: Colors.white,
             ),
             headlineSmall: TextStyle(
+              fontFamily: 'WorkSans',
               fontSize: 32,
               fontStyle: FontStyle.normal,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w400,
               color: Colors.white,
             ),
             bodyLarge: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 96,
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w300,
                 color: Colors.white),
             bodyMedium: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 16,
                 fontStyle: FontStyle.normal,
                 fontWeight: FontWeight.w400,
                 color: Colors.white),
             bodySmall: TextStyle(
+                fontFamily: 'WorkSans',
                 fontSize: 14,
                 fontStyle: FontStyle.normal,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w300,
                 color: Colors.white)),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(

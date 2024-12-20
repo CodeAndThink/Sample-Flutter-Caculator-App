@@ -27,6 +27,12 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
   generate: true
+  fonts:
+    - family: WorkSans
+      fonts:
+        - asset: fonts/WorkSans-Regular.ttf
+        - asset: fonts/WorkSans-Light.ttf
+          weight: 300
   assets:
     - assets/images/logo.png
     - assets/icons/delete.svg
