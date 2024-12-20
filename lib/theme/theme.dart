@@ -17,7 +17,7 @@ class AppTheme {
         ),
         textTheme: const TextTheme(
             headlineLarge: TextStyle(
-              fontSize: 96,
+              fontSize: 90,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w700,
               color: Colors.black,
@@ -79,7 +79,7 @@ class AppTheme {
         ),
         textTheme: const TextTheme(
             headlineLarge: TextStyle(
-              fontSize: 96,
+              fontSize: 90,
               fontStyle: FontStyle.normal,
               fontWeight: FontWeight.w700,
               color: Colors.white,

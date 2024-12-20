@@ -11,7 +11,12 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  
+  final bool isDarkMode = false;
+
+  void changeTheme(BuildContext context) {
+    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
+    homeViewModel.changeTheme();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +24,9 @@ class MainApp extends StatelessWidget {
         create: (context) => HomeViewModel(),
         builder: (context, child) {
           return MaterialApp(
-            theme: AppTheme.lightTheme,
+            theme: context.watch<HomeViewModel>().isDarkMode
+                ? AppTheme.darkTheme
+                : AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: ThemeMode.system,
             home: const Scaffold(

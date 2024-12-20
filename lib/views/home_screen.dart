@@ -1,8 +1,10 @@
 import 'package:caculator_app/common/views/custom_switch_button.dart';
 import 'package:caculator_app/configs/configs.dart';
 import 'package:caculator_app/model/enum/enum.dart';
+import 'package:caculator_app/views/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,7 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isDark = false;
   final TextEditingController _operationController = TextEditingController();
   final TextEditingController _resultController = TextEditingController();
 
@@ -36,6 +37,8 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _appBar(context),
               const SizedBox(height: 55),
@@ -51,13 +54,11 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _appBar(BuildContext context) {
     return Center(
         child: CustomSwitchButton(
-      value: isDark,
+      value: !context.watch<HomeViewModel>().isDarkMode,
       inactiveImage: 'assets/icons/moon.svg',
       activieImage: 'assets/icons/sun.svg',
       onChanged: (newValue) {
-        setState(() {
-          isDark = newValue;
-        });
+        Provider.of<HomeViewModel>(context, listen: false).changeTheme();
       },
     ));
   }
@@ -69,29 +70,30 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: screenHeight * 0.21,
       width: screenWidth - 32,
-      margin: const EdgeInsets.all(16),
+      margin: const EdgeInsets.symmetric(vertical: 16),
       child: Column(
         children: [
           SizedBox(
-            height: screenHeight * 0.09,
+            height: screenHeight * 0.07,
             child: TextField(
               controller: _operationController,
               maxLines: 1,
               decoration: const InputDecoration(border: InputBorder.none),
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  color: context.watch<HomeViewModel>().isDarkMode
+                      ? Configs.operatorColorDarkMode
+                      : Configs.operatorColorLightMode),
               textAlign: TextAlign.right,
-              textDirection: TextDirection.rtl,
             ),
           ),
           SizedBox(
-            height: screenHeight * 0.12,
+            height: screenHeight * 0.14,
             child: TextField(
               controller: _resultController,
               maxLines: 1,
               decoration: const InputDecoration(border: InputBorder.none),
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.right,
-              textDirection: TextDirection.rtl,
             ),
           ),
         ],
@@ -104,86 +106,95 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
+          
+          // 'C', '+/-', '%', '/'
           Row(
             children: [
-              _textButton(context, operationToDisplaySymbol(Operation.reset),
-                  Configs.subActionButtonColor, Colors.white),
+              _subActionButton(
+                context,
+                operationToDisplaySymbol(Operation.reset),
+              ),
               const SizedBox(width: 16),
-              _iconButton(context, operationToDisplaySymbol(Operation.negation),
-                  Configs.subActionButtonColor, Colors.white),
-              const SizedBox(width: 16),
-              _textButton(
+              _iconButton(
                   context,
-                  operationToDisplaySymbol(Operation.persentage),
-                  Configs.subActionButtonColor,
-                  Colors.white),
+                  operationToDisplaySymbol(Operation.negation),
+                  (context.read<HomeViewModel>().isDarkMode
+                      ? Configs.subActionButtonColorDarkMode
+                      : Configs.subActionButtonColorLightMode),
+                  null),
+              const SizedBox(width: 16),
+              _subActionButton(
+                context,
+                operationToDisplaySymbol(Operation.persentage),
+              ),
               const SizedBox(width: 16),
               _textButton(context, operationToDisplaySymbol(Operation.divide),
                   Configs.actionButtonColor, Colors.white),
             ],
           ),
+          
           const SizedBox(height: 16),
+          
+          // '7', '8', '9', 'x'
           Row(
             children: [
-              _textButton(
-                  context, '7', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '7'),
               const SizedBox(width: 16),
-              _textButton(
-                  context, '8', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '8'),
               const SizedBox(width: 16),
-              _textButton(
-                  context, '9', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '9'),
               const SizedBox(width: 16),
-              _textButton(context, operationToDisplaySymbol(Operation.multiply),
-                  Configs.actionButtonColor, Colors.white),
+              _operatorButton(
+                  context, operationToDisplaySymbol(Operation.multiply)),
             ],
           ),
+          
           const SizedBox(height: 16),
+          
+          // '4', '5', '6', '-'
           Row(
             children: [
-              _textButton(
-                  context, '4', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '4'),
               const SizedBox(width: 16),
-              _textButton(
-                  context, '5', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '5'),
               const SizedBox(width: 16),
-              _textButton(
-                  context, '6', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '6'),
               const SizedBox(width: 16),
-              _textButton(context, operationToDisplaySymbol(Operation.subtract),
-                  Configs.actionButtonColor, Colors.white),
+              _operatorButton(
+                  context, operationToDisplaySymbol(Operation.subtract)),
             ],
           ),
+          
           const SizedBox(height: 16),
+          
+          // '1', '2', '3', '+'
           Row(
             children: [
-              _textButton(
-                  context, '1', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '1'),
               const SizedBox(width: 16),
-              _textButton(
-                  context, '2', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '2'),
               const SizedBox(width: 16),
-              _textButton(
-                  context, '3', Theme.of(context).colorScheme.primary, null),
+              _numberButton(context, '3'),
               const SizedBox(width: 16),
-              _textButton(context, operationToDisplaySymbol(Operation.add),
-                  Configs.actionButtonColor, Colors.white),
+              _operatorButton(context, operationToDisplaySymbol(Operation.add)),
             ],
           ),
+          
           const SizedBox(height: 16),
+          
+          // '0', '.', '<', '='
           Row(
             children: [
-              _textButton(context, operationToDisplaySymbol(Operation.dot),
-                  Theme.of(context).colorScheme.primary, null),
-              const SizedBox(width: 16),
               _textButton(
-                  context, '0', Theme.of(context).colorScheme.primary, null),
+                  context, operationToDisplaySymbol(Operation.dot), null, null),
+              const SizedBox(width: 16),
+              _numberButton(context, '0'),
               const SizedBox(width: 16),
               _iconButton(context, operationToDisplaySymbol(Operation.delete),
-                  Theme.of(context).colorScheme.primary, null),
+                  null, null),
               const SizedBox(width: 16),
-              _textButton(context, operationToDisplaySymbol(Operation.equal),
-                  Configs.actionButtonColor, Colors.white),
+              _operatorButton(
+                  context, operationToDisplaySymbol(Operation.equal)),
             ],
           ),
         ],
@@ -191,8 +202,27 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _textButton(BuildContext context, String number, Color backgroundColor,
-      Color? textColor) {
+  Widget _subActionButton(BuildContext context, String operator) {
+    return _textButton(
+        context,
+        operator,
+        (context.read<HomeViewModel>().isDarkMode
+            ? Configs.subActionButtonColorDarkMode
+            : Configs.subActionButtonColorLightMode),
+        null);
+  }
+
+  Widget _numberButton(BuildContext context, String number) {
+    return _textButton(context, number, null, null);
+  }
+
+  Widget _operatorButton(BuildContext context, String operator) {
+    return _textButton(
+        context, operator, Configs.actionButtonColor, Colors.white);
+  }
+
+  Widget _textButton(BuildContext context, String number,
+      Color? backgroundColor, Color? textColor) {
     final size = MediaQuery.of(context).size;
     final screenHeight = size.height;
     final screenWidth = size.width;
@@ -224,7 +254,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
               )),
-              backgroundColor: WidgetStatePropertyAll(backgroundColor)),
+              backgroundColor: WidgetStatePropertyAll(backgroundColor ??
+                  (context.read<HomeViewModel>().isDarkMode
+                      ? Configs.numberColorDarkMode
+                      : Configs.numberColorLightMode))),
           child: Text(number,
               style: Theme.of(context)
                   .textTheme
@@ -236,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _iconButton(BuildContext context, String iconPath,
-      Color backgroundColor, Color? iconColor) {
+      Color? backgroundColor, Color? iconColor) {
     final size = MediaQuery.of(context).size;
     final screenHeight = size.height;
     final screenWidth = size.width;
@@ -261,14 +294,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(24),
               )),
-              backgroundColor: WidgetStatePropertyAll(backgroundColor)),
+              backgroundColor: WidgetStatePropertyAll(backgroundColor ??
+                  (context.read<HomeViewModel>().isDarkMode
+                      ? Configs.numberColorDarkMode
+                      : Configs.numberColorLightMode))),
           child: SvgPicture.asset(
             iconPath,
             height: 26,
             width: 26,
             colorFilter: iconColor != null
                 ? ColorFilter.mode(iconColor, BlendMode.srcIn)
-                : null,
+                : ColorFilter.mode(
+                    Theme.of(context).colorScheme.secondary, BlendMode.srcIn),
           ),
         ),
       ),
