@@ -230,18 +230,24 @@ class _HomeScreenState extends State<HomeScreen> {
         height: screenHeight > screenWidth ? screenHeight * 0.09 : 72,
         child: ElevatedButton(
           onPressed: () {
-            if (number == 'C') {
+            if (number == operationToDisplaySymbol(Operation.reset)) {
               _operationController.text = '0';
               _resultController.text = '0';
-            } else if (number == '=') {
+            } else if (number == operationToDisplaySymbol(Operation.equal)) {
               try {
-                final result = eval(_operationController.text);
-                _resultController.text = result.toString();
+                final result = _operationController.text;
+                _resultController.text =
+                    context.read<HomeViewModel>().evaluateExpression(result);
               } catch (e) {
                 _resultController.text = 'Error';
               }
             } else {
               if (_operationController.text == '0') {
+                if (number != operationToDisplaySymbol(Operation.dot)) {
+                  _operationController.text = number;
+                } else {
+                  _operationController.text += number;
+                }
                 _operationController.text = number;
               } else {
                 _operationController.text += number;
@@ -277,7 +283,7 @@ class _HomeScreenState extends State<HomeScreen> {
         height: screenHeight > screenWidth ? screenHeight * 0.09 : 72,
         child: ElevatedButton(
           onPressed: () {
-            if (iconPath == 'assets/icons/delete.svg') {
+            if (iconPath == operationToDisplaySymbol(Operation.delete)) {
               if (_operationController.text.length > 1) {
                 _operationController.text = _operationController.text
                     .substring(0, _operationController.text.length - 1);
@@ -309,9 +315,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
-  }
-
-  eval(String text) {
-    return text;
   }
 }
