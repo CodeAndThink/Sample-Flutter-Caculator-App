@@ -106,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          
           // 'C', '+/-', '%', '/'
           Row(
             children: [
@@ -132,9 +131,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   Configs.actionButtonColor, Colors.white),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // '7', '8', '9', 'x'
           Row(
             children: [
@@ -148,9 +147,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   context, operationToDisplaySymbol(Operation.multiply)),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // '4', '5', '6', '-'
           Row(
             children: [
@@ -164,9 +163,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   context, operationToDisplaySymbol(Operation.subtract)),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // '1', '2', '3', '+'
           Row(
             children: [
@@ -179,9 +178,9 @@ class _HomeScreenState extends State<HomeScreen> {
               _operatorButton(context, operationToDisplaySymbol(Operation.add)),
             ],
           ),
-          
+
           const SizedBox(height: 16),
-          
+
           // '0', '.', '<', '='
           Row(
             children: [

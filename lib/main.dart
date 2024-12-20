@@ -11,13 +11,6 @@ void main() {
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  final bool isDarkMode = false;
-
-  void changeTheme(BuildContext context) {
-    final homeViewModel = Provider.of<HomeViewModel>(context, listen: false);
-    homeViewModel.changeTheme();
-  }
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -27,8 +20,6 @@ class MainApp extends StatelessWidget {
             theme: context.watch<HomeViewModel>().isDarkMode
                 ? AppTheme.darkTheme
                 : AppTheme.lightTheme,
-            darkTheme: AppTheme.darkTheme,
-            themeMode: ThemeMode.system,
             home: const Scaffold(
               body: Center(
                 child: HomeScreen(),
