@@ -11,6 +11,7 @@ dependencies:
     sdk: flutter
   provider: ^6.1.2
   flutter_launcher_icons: ^0.13.1
+  flutter_svg: ^2.0.14
 
 dev_dependencies:
   flutter_test:
@@ -28,3 +29,9 @@ flutter:
   generate: true
   assets:
     - assets/images/logo.png
+    - assets/icons/delete.svg
+    - assets/icons/add_of_minus_icon.svg
+    - assets/icons/divider.svg
+    - assets/icons/multi.svg
+    - assets/icons/sun.svg
+    - assets/icons/moon.svg
