@@ -109,11 +109,13 @@ class _HomeScreenState extends State<HomeScreen> {
           // 'C', '+/-', '%', '/'
           Row(
             children: [
+              // 'C'
               _subActionButton(
                 context,
                 operationToDisplaySymbol(Operation.reset),
               ),
               const SizedBox(width: 16),
+              // '+/-'
               _iconButton(
                   context,
                   operationToDisplaySymbol(Operation.negation),
@@ -122,11 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       : Configs.subActionButtonColorLightMode),
                   null),
               const SizedBox(width: 16),
+              // '%'
               _subActionButton(
                 context,
                 operationToDisplaySymbol(Operation.persentage),
               ),
               const SizedBox(width: 16),
+              // '/'
               _textButton(context, operationToDisplaySymbol(Operation.divide),
                   Configs.actionButtonColor, Colors.white),
             ],
@@ -239,6 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 _resultController.text =
                     context.read<HomeViewModel>().evaluateExpression(result);
               } catch (e) {
+                print(e);
                 _resultController.text = 'Error';
               }
             } else {
@@ -288,6 +293,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     .substring(0, _operationController.text.length - 1);
               } else {
                 _operationController.text = '0';
+              }
+            } else if (iconPath ==
+                operationToDisplaySymbol(Operation.negation)) {
+              if (_operationController.text[0] == '-') {
+                _operationController.text =
+                    _operationController.text.substring(1);
+              } else {
+                _operationController.text = '-${_operationController.text}';
               }
             } else {
               _operationController.text += iconPath;

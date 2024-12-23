@@ -13,13 +13,35 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Insert Operator '+' If Missing
+  List<String> insertOperatorIfMissing(List<String> tokens) {
+    List<String> result = [];
+
+    for (int i = 0; i < tokens.length; i++) {
+      result.add(tokens[i]);
+
+      if (i < tokens.length - 1) {
+        final current = tokens[i];
+        final next = tokens[i + 1];
+        if (RegExp(r'^\d+(\.\d+)?$').hasMatch(current) &&
+            RegExp(r'^-?\d+(\.\d+)?$').hasMatch(next)) {
+          result.add('+');
+        }
+      }
+    }
+
+    return result;
+  }
+
   //Calculator Logic
   String evaluateExpression(String expr) {
     expr = expr.replaceAll('×', '*').replaceAll('÷', '/');
 
-    final regex = RegExp(r'(\d+(\.\d+)?|[\+\-\*\/])');
-    final tokens =
+    final regex = RegExp(r'(-?\d+(\.\d+)?|[\+\-\*\/])');
+    List<String> tokens =
         regex.allMatches(expr).map((match) => match.group(0)!).toList();
+
+    tokens = insertOperatorIfMissing(tokens);
 
     List<String> stack = [];
     for (int i = 0; i < tokens.length; i++) {
