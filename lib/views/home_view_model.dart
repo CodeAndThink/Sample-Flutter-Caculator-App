@@ -1,3 +1,4 @@
+import 'package:caculator_app/manager/setting_manager.dart';
 import 'package:caculator_app/model/enum/enum.dart';
 import 'package:flutter/material.dart';
 
@@ -15,15 +16,21 @@ class HomeViewModel extends ChangeNotifier {
   String _error = "";
   String get error => _error;
 
+  late SettingManager _settingManager;
+
   //MARK: Constructor
 
-  HomeViewModel();
+  HomeViewModel(SettingManager settingManager) {
+    _settingManager = settingManager;
+    _initialTheme();
+  }
 
   //MARK: Puclic Methods
 
   //Theme Logic
-  void changeTheme() {
+  void changeTheme() async {
     isDarkMode = !isDarkMode;
+    await _settingManager.saveUserThemeMode(isDarkMode);
     notifyListeners();
   }
 
@@ -133,9 +140,16 @@ class HomeViewModel extends ChangeNotifier {
 
   //MARK: Private Methods
 
+  //Set Error
   void _setError(String message) {
     _error = message;
     _operationResult = "Error";
+    notifyListeners();
+  }
+
+  //Theme Mode Initialization
+  void _initialTheme() async {
+    isDarkMode = await _settingManager.getUserThemeMode();
     notifyListeners();
   }
 }

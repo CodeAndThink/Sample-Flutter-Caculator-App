@@ -1,3 +1,4 @@
+import 'package:caculator_app/manager/setting_manager.dart';
 import 'package:caculator_app/theme/theme.dart';
 import 'package:caculator_app/views/home_screen.dart';
 import 'package:caculator_app/views/home_view_model.dart';
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => HomeViewModel(),
+        create: (context) => HomeViewModel(SettingManager.shared),
         builder: (context, child) {
           return MaterialApp(
             theme: context.watch<HomeViewModel>().isDarkMode
