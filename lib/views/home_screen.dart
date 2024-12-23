@@ -243,7 +243,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 _resultController.text =
                     context.read<HomeViewModel>().evaluateExpression(result);
               } catch (e) {
-                print(e);
                 _resultController.text = 'Error';
               }
             } else {
