@@ -84,6 +84,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? Configs.operatorColorDarkMode
                       : Configs.operatorColorLightMode),
               textAlign: TextAlign.right,
+              enabled: false,
+              enableSuggestions: false,
             ),
           ),
           SizedBox(
@@ -94,6 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: const InputDecoration(border: InputBorder.none),
               style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.right,
+              enabled: false,
+              enableSuggestions: false,
             ),
           ),
         ],
