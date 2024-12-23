@@ -217,7 +217,6 @@ class _HomeScreenState extends State<HomeScreen> {
       Color? backgroundColor, Color? textColor) {
     final size = MediaQuery.of(context).size;
     final screenHeight = size.height;
-    final screenWidth = size.width;
     return Expanded(
       child: SizedBox(
         height: screenHeight * 0.09,
@@ -258,7 +257,6 @@ class _HomeScreenState extends State<HomeScreen> {
       Color? backgroundColor, Color? iconColor) {
     final size = MediaQuery.of(context).size;
     final screenHeight = size.height;
-    final screenWidth = size.width;
     return Expanded(
       child: SizedBox(
         height: screenHeight * 0.09,
