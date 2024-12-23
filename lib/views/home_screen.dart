@@ -28,22 +28,19 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              _appBar(context),
-              const SizedBox(height: 55),
-              _resultArea(context),
-              _numberPad(context),
-            ],
-          ),
+        child: Column(
+          children: [
+            _appBar(context),
+            const Spacer(),
+            _resultArea(context),
+            _numberPad(context),
+          ],
         ),
       ),
     );
   }
 
+  //App Bar
   Widget _appBar(BuildContext context) {
     return Center(
         child: CustomSwitchButton(
@@ -56,6 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
+  //Operation And Result Area
   Widget _resultArea(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final screenWidth = size.width;
@@ -97,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  //Number Pad
   Widget _numberPad(BuildContext context) {
     // Number pad map
     // ['C', '+/-', '%' , '/']
