@@ -248,7 +248,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 } else {
                   _operationController.text += number;
                 }
-                _operationController.text = number;
               } else {
                 _operationController.text += number;
               }

@@ -1,23 +1,26 @@
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier {
+  //MARK: Properties
+
   bool isDarkMode = false;
 
+  //MARK: Puclic Methods
+
+  //Theme Logic
   void changeTheme() {
     isDarkMode = !isDarkMode;
     notifyListeners();
   }
 
+  //Calculator Logic
   String evaluateExpression(String expr) {
-    // Thay thế các toán tử để chuẩn bị xử lý
     expr = expr.replaceAll('×', '*').replaceAll('÷', '/');
 
-    // Tách biểu thức thành số và toán tử
     final regex = RegExp(r'(\d+(\.\d+)?|[\+\-\*\/])');
     final tokens =
         regex.allMatches(expr).map((match) => match.group(0)!).toList();
 
-    // Xử lý nhân/chia trước
     List<String> stack = [];
     for (int i = 0; i < tokens.length; i++) {
       if (tokens[i] == '*' || tokens[i] == '/') {
@@ -30,7 +33,6 @@ class HomeViewModel extends ChangeNotifier {
       }
     }
 
-    // Xử lý cộng/trừ
     double result = double.parse(stack[0]);
     for (int i = 1; i < stack.length; i += 2) {
       double value = double.parse(stack[i + 1]);
