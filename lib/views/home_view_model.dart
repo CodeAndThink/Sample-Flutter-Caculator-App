@@ -23,7 +23,7 @@ class HomeViewModel extends ChangeNotifier {
       if (i < tokens.length - 1) {
         final current = tokens[i];
         final next = tokens[i + 1];
-        if (RegExp(r'^\d+(\.\d+)?$').hasMatch(current) &&
+        if (RegExp(r'^-?\d+(\.\d+)?$').hasMatch(current) &&
             RegExp(r'^-?\d+(\.\d+)?$').hasMatch(next)) {
           result.add('+');
         }
@@ -42,6 +42,7 @@ class HomeViewModel extends ChangeNotifier {
         regex.allMatches(expr).map((match) => match.group(0)!).toList();
 
     tokens = insertOperatorIfMissing(tokens);
+    print(tokens);
 
     List<String> stack = [];
     for (int i = 0; i < tokens.length; i++) {
