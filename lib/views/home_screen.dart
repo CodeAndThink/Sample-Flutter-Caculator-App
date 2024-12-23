@@ -40,7 +40,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //App Bar
   Widget _appBar(BuildContext context) {
     return Center(
         child: CustomSwitchButton(
@@ -53,7 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
     ));
   }
 
-  //Operation And Result Area
   Widget _resultArea(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final screenWidth = size.width;
@@ -73,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           : Configs.operatorColorLightMode,
                       height: 0),
                   textAlign: TextAlign.right,
-                  maxLines: 1,
+                  maxLines: 2,
                 );
               },
               selector: (context, viewmodel) => viewmodel.operationString),
@@ -95,7 +93,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  //Number Pad
   Widget _numberPad(BuildContext context) {
     // Number pad map
     // ['C', '+/-', '%' , '/']
