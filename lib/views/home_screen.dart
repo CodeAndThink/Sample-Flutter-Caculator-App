@@ -15,16 +15,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
@@ -230,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final screenWidth = size.width;
     return Expanded(
       child: SizedBox(
-        height: screenHeight > screenWidth ? screenHeight * 0.09 : 72,
+        height: screenHeight * 0.09,
         child: ElevatedButton(
           onPressed: () {
             if (number == operationToDisplaySymbol(Operation.reset)) {
@@ -252,11 +242,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   (context.read<HomeViewModel>().isDarkMode
                       ? Configs.numberColorDarkMode
                       : Configs.numberColorLightMode))),
-          child: Text(number,
-              style: Theme.of(context)
-                  .textTheme
-                  .headlineSmall
-                  ?.copyWith(color: textColor)),
+          child: Text(
+            number,
+            style: Theme.of(context)
+                .textTheme
+                .headlineSmall
+                ?.copyWith(color: textColor, height: 0),
+          ),
         ),
       ),
     );
@@ -269,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final screenWidth = size.width;
     return Expanded(
       child: SizedBox(
-        height: screenHeight > screenWidth ? screenHeight * 0.09 : 72,
+        height: screenHeight * 0.09,
         child: ElevatedButton(
           onPressed: () {
             if (iconPath == operationToDisplaySymbol(Operation.delete)) {
