@@ -14,20 +14,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _operationController = TextEditingController();
-  final TextEditingController _resultController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-    _operationController.text = '0';
-    _resultController.text = '0';
   }
 
   @override
   void dispose() {
-    _operationController.dispose();
-    _resultController.dispose();
     super.dispose();
   }
 
@@ -55,8 +48,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Center(
         child: CustomSwitchButton(
       value: !context.watch<HomeViewModel>().isDarkMode,
-      inactiveImage: 'assets/icons/moon.svg',
-      activieImage: 'assets/icons/sun.svg',
+      inactiveImage: getGlobaleAssets(GlobalAssets.moonIcon),
+      activieImage: getGlobaleAssets(GlobalAssets.sunIcon),
       onChanged: (newValue) {
         Provider.of<HomeViewModel>(context, listen: false).changeTheme();
       },
@@ -65,47 +58,53 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _resultArea(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final screenHeight = size.height;
     final screenWidth = size.width;
     return Container(
-      height: screenHeight * 0.21,
       width: screenWidth - 32,
-      margin: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          SizedBox(
-            height: screenHeight * 0.07,
-            child: TextField(
-              controller: _operationController,
-              maxLines: 1,
-              decoration: const InputDecoration(border: InputBorder.none),
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                  color: context.watch<HomeViewModel>().isDarkMode
-                      ? Configs.operatorColorDarkMode
-                      : Configs.operatorColorLightMode),
-              textAlign: TextAlign.right,
-              enabled: false,
-              enableSuggestions: false,
-            ),
-          ),
-          SizedBox(
-            height: screenHeight * 0.14,
-            child: TextField(
-              controller: _resultController,
-              maxLines: 1,
-              decoration: const InputDecoration(border: InputBorder.none),
-              style: Theme.of(context).textTheme.bodyLarge,
-              textAlign: TextAlign.right,
-              enabled: false,
-              enableSuggestions: false,
-            ),
-          ),
+          Selector<HomeViewModel, String>(
+              builder: (context, data, child) {
+                return Text(
+                  data,
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: context.watch<HomeViewModel>().isDarkMode
+                          ? Configs.operatorColorDarkMode
+                          : Configs.operatorColorLightMode,
+                      height: 0),
+                  textAlign: TextAlign.right,
+                  maxLines: 1,
+                );
+              },
+              selector: (context, viewmodel) => viewmodel.operationString),
+          Selector<HomeViewModel, String>(
+              builder: (context, data, child) {
+                return Text(
+                  data,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(height: 0),
+                  textAlign: TextAlign.right,
+                  maxLines: 1,
+                );
+              },
+              selector: (context, viewmodel) => viewmodel.operationResult),
         ],
       ),
     );
   }
 
   Widget _numberPad(BuildContext context) {
+    // Number pad map
+    // ['C', '+/-', '%' , '/']
+    // ['7',  '8' , '9' , 'x']
+    // ['4',  '5' , '6' , '-']
+    // ['1',  '2' , '3' , '+']
+    // ['.',  '0' ,'DEL', '=']
+
     return Container(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -239,26 +238,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ElevatedButton(
           onPressed: () {
             if (number == operationToDisplaySymbol(Operation.reset)) {
-              _operationController.text = '0';
-              _resultController.text = '0';
+              Provider.of<HomeViewModel>(context, listen: false).resetAction();
             } else if (number == operationToDisplaySymbol(Operation.equal)) {
-              try {
-                final result = _operationController.text;
-                _resultController.text =
-                    context.read<HomeViewModel>().evaluateExpression(result);
-              } catch (e) {
-                _resultController.text = 'Error';
-              }
+              Provider.of<HomeViewModel>(context, listen: false)
+                  .calculationAction();
             } else {
-              if (_operationController.text == '0') {
-                if (number != operationToDisplaySymbol(Operation.dot)) {
-                  _operationController.text = number;
-                } else {
-                  _operationController.text += number;
-                }
-              } else {
-                _operationController.text += number;
-              }
+              Provider.of<HomeViewModel>(context, listen: false)
+                  .insertOperationAction(number);
             }
           },
           style: ButtonStyle(
@@ -291,22 +277,13 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ElevatedButton(
           onPressed: () {
             if (iconPath == operationToDisplaySymbol(Operation.delete)) {
-              if (_operationController.text.length > 1) {
-                _operationController.text = _operationController.text
-                    .substring(0, _operationController.text.length - 1);
-              } else {
-                _operationController.text = '0';
-              }
+              Provider.of<HomeViewModel>(context, listen: false).deleteAction();
             } else if (iconPath ==
                 operationToDisplaySymbol(Operation.negation)) {
-              if (_operationController.text[0] == '-') {
-                _operationController.text =
-                    _operationController.text.substring(1);
-              } else {
-                _operationController.text = '-${_operationController.text}';
-              }
+              Provider.of<HomeViewModel>(context, listen: false).negateAction();
             } else {
-              _operationController.text += iconPath;
+              Provider.of<HomeViewModel>(context, listen: false)
+                  .insertOperationAction(iconPath);
             }
           },
           style: ButtonStyle(
@@ -325,7 +302,9 @@ class _HomeScreenState extends State<HomeScreen> {
             colorFilter: iconColor != null
                 ? ColorFilter.mode(iconColor, BlendMode.srcIn)
                 : ColorFilter.mode(
-                    Theme.of(context).colorScheme.secondary, BlendMode.srcIn),
+                    Theme.of(context).colorScheme.secondary,
+                    BlendMode.srcIn,
+                  ),
           ),
         ),
       ),

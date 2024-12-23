@@ -1,9 +1,23 @@
+import 'package:caculator_app/model/enum/enum.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier {
   //MARK: Properties
 
   bool isDarkMode = false;
+
+  String _operationString = "0";
+  String get operationString => _operationString;
+
+  String _operationResult = "0";
+  String get operationResult => _operationResult;
+
+  String _error = "";
+  String get error => _error;
+
+  //MARK: Constructor
+
+  HomeViewModel();
 
   //MARK: Puclic Methods
 
@@ -63,5 +77,65 @@ class HomeViewModel extends ChangeNotifier {
     }
 
     return result.toString();
+  }
+
+  //Delete Action
+  void deleteAction() {
+    if (_operationString.length > 1) {
+      _operationString =
+          _operationString.substring(0, _operationString.length - 1);
+    } else {
+      _operationString = '0';
+    }
+    notifyListeners();
+  }
+
+  //Negate Action
+  void negateAction() {
+    if (_operationString[0] == '-') {
+      _operationString = _operationString.substring(1);
+    } else {
+      _operationString = '-$_operationString';
+    }
+    notifyListeners();
+  }
+
+  //Insert Action
+  void insertOperationAction(String operationChar) {
+    if (_operationString == '0') {
+      if (operationChar != operationToDisplaySymbol(Operation.dot)) {
+        _operationString = operationChar;
+      } else {
+        _operationString += operationChar;
+      }
+    } else {
+      _operationString += operationChar;
+    }
+    notifyListeners();
+  }
+
+  //Reset Action
+  void resetAction() {
+    _operationString = "0";
+    _operationResult = "0";
+    notifyListeners();
+  }
+
+  //Calculation Action
+  void calculationAction() {
+    try {
+      _operationResult = evaluateExpression(_operationString);
+    } catch (e) {
+      _setError(e.toString());
+    }
+    notifyListeners();
+  }
+
+  //MARK: Private Methods
+
+  void _setError(String message) {
+    _error = message;
+    _operationResult = "Error";
+    notifyListeners();
   }
 }

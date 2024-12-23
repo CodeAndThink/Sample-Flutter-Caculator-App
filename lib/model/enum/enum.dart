@@ -56,3 +56,19 @@ String operationToText(Operation operation) {
       return '';
   }
 }
+
+enum GlobalAssets {
+  moonIcon,
+  sunIcon,
+}
+
+String getGlobaleAssets(GlobalAssets asset) {
+  switch (asset) {
+    case GlobalAssets.moonIcon:
+      return 'assets/icons/moon.svg';
+    case GlobalAssets.sunIcon:
+      return 'assets/icons/sun.svg';
+    default:
+      return '';
+  }
+}
