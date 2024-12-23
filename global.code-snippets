@@ -1,0 +1,13 @@
+{
+  "File Header": {
+    "prefix": "fileheader",
+    "body": [
+      "//",
+      "// ${TM_FILENAME}",
+      "// ${workspaceFolderBasename}",
+      "// Created by ${USER} on ${CURRENT_YEAR}/${CURRENT_MONTH}/${CURRENT_DATE}.",
+      "//"
+    ],
+    "description": "Insert a file header comment"
+  }
+}
