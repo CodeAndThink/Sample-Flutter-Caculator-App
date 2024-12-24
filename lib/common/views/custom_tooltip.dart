@@ -1,6 +1,8 @@
 import 'package:caculator_app/configs/configs.dart';
+import 'package:caculator_app/views/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class CustomTooltip extends StatefulWidget {
   const CustomTooltip({
@@ -55,8 +57,10 @@ class CustomTooltipState extends State<CustomTooltip> {
                             RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24),
                         )),
-                        backgroundColor: const WidgetStatePropertyAll(
-                            Configs.operatorColorDarkMode)),
+                        backgroundColor: WidgetStatePropertyAll(
+                            context.read<HomeViewModel>().isDarkMode
+                                ? Configs.subActionButtonColorDarkMode
+                                : Configs.subActionButtonColorLightMode)),
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: widget.data));
                       ScaffoldMessenger.of(context).showSnackBar(
