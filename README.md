@@ -33,8 +33,9 @@ $PROJECT_ROOT
 │   ├── common           # Reusable UI components (widgets)
 │   ├── configs          # Folder stores static variables (e.g., color of buttons)
 │   ├── manager          # Folder for managing information (e.g., user's settings)
-│   ├── models           # Models And Enum
+│   ├── models           # Models and Enum
 │   ├── theme            # Folder for custom app theme
+│   ├── utils            # Userful functions
 │   └── views            # Folder for views
 ├── assets               # Static resources (images, gifs, etc.)
 └── pubspec.yaml         # Flutter project configuration file

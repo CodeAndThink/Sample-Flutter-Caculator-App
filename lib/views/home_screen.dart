@@ -4,9 +4,7 @@ import 'package:caculator_app/configs/configs.dart';
 import 'package:caculator_app/model/enum/enum.dart';
 import 'package:caculator_app/views/home_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
