@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               selector: (context, viewmodel) => viewmodel.operationString),
           CustomTooltip(
-            data: context.read<HomeViewModel>().operationString,
+            data: context.read<HomeViewModel>().operationResult,
             child: Selector<HomeViewModel, String>(
                 builder: (context, data, child) {
                   return SingleChildScrollView(
