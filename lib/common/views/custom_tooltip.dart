@@ -60,11 +60,16 @@ class CustomTooltipState extends State<CustomTooltip> {
                     onPressed: () {
                       Clipboard.setData(ClipboardData(text: widget.data));
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Đã copy!')),
+                        const SnackBar(
+                            content: Text(
+                          'Copied!',
+                        )),
                       );
                       _hideTooltip();
                     },
-                    child: const Text("Copy"))),
+                    child: Text("Copy",
+                        style: TextStyle(
+                            color: Theme.of(context).colorScheme.secondary)))),
           ),
         ],
       ),

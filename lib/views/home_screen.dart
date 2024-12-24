@@ -6,6 +6,7 @@ import 'package:caculator_app/views/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -71,8 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             data: context.read<HomeViewModel>().operationString,
             child: Selector<HomeViewModel, String>(
                 builder: (context, data, child) {
-                  return Text(
-                    data,
+                  return Text(data,
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge
