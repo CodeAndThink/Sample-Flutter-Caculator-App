@@ -72,13 +72,17 @@ class _HomeScreenState extends State<HomeScreen> {
             data: context.read<HomeViewModel>().operationString,
             child: Selector<HomeViewModel, String>(
                 builder: (context, data, child) {
-                  return Text(data,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge
-                        ?.copyWith(height: 0),
-                    textAlign: TextAlign.right,
-                    maxLines: 1,
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      data,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(height: 0),
+                      textAlign: TextAlign.right,
+                      maxLines: 1,
+                    ),
                   );
                 },
                 selector: (context, viewmodel) => viewmodel.operationResult),
