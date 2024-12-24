@@ -1,7 +1,9 @@
+import 'package:caculator_app/manager/data_manager.dart';
 import 'package:caculator_app/manager/setting_manager.dart';
 import 'package:caculator_app/model/enum/enum.dart';
 import 'package:caculator_app/utils/converse_number.dart';
 import 'package:flutter/material.dart';
+import 'package:caculator_app/model/model/operation.dart' as operation_model;
 
 class HomeViewModel extends ChangeNotifier {
   //MARK: Properties
@@ -18,12 +20,15 @@ class HomeViewModel extends ChangeNotifier {
   String get error => _error;
 
   late SettingManager _settingManager;
+  late DataManager _dataManager;
 
   //MARK: Constructor
 
-  HomeViewModel(SettingManager settingManager) {
+  HomeViewModel(SettingManager settingManager, DataManager dataManager) {
     _settingManager = settingManager;
+    _dataManager = dataManager;
     _initialTheme();
+    _initialData();
   }
 
   //MARK: Puclic Methods
@@ -32,6 +37,13 @@ class HomeViewModel extends ChangeNotifier {
   void changeTheme() async {
     isDarkMode = !isDarkMode;
     await _settingManager.saveUserThemeMode(isDarkMode);
+    notifyListeners();
+  }
+
+  //Theme Logic
+  void changeData() async {
+    await _dataManager.saveUserData(
+        operation_model.Operation(_operationString, _operationResult));
     notifyListeners();
   }
 
@@ -153,5 +165,18 @@ class HomeViewModel extends ChangeNotifier {
   void _initialTheme() async {
     isDarkMode = await _settingManager.getUserThemeMode();
     notifyListeners();
+  }
+
+  void _initialData() async {
+    final lastOperation = await _dataManager.getUserData();
+    _operationResult = lastOperation.operationResult;
+    _operationString = lastOperation.operationString;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    changeData();
+    super.dispose();
   }
 }
