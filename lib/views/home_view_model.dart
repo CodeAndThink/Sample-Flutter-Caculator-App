@@ -1,5 +1,6 @@
 import 'package:caculator_app/manager/setting_manager.dart';
 import 'package:caculator_app/model/enum/enum.dart';
+import 'package:caculator_app/utils/converse_number.dart';
 import 'package:flutter/material.dart';
 
 class HomeViewModel extends ChangeNotifier {
@@ -131,7 +132,8 @@ class HomeViewModel extends ChangeNotifier {
   //Calculation Action
   void calculationAction() {
     try {
-      _operationResult = evaluateExpression(_operationString);
+      final result = evaluateExpression(_operationString);
+      _operationResult = ConverseNumber.converseToDefaultNumber(result);
     } catch (e) {
       _setError(e.toString());
     }

@@ -16,4 +16,6 @@ class Configs {
 
   static const Color numberColorLightMode = Colors.white;
   static const Color numberColorDarkMode = Color(0xFF2E2F38);
+
+  static const String numberFormat = "#,##0.00";
 }

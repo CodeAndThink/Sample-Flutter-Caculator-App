@@ -1,9 +1,12 @@
 import 'package:caculator_app/common/views/custom_switch_button.dart';
+import 'package:caculator_app/common/views/custom_tooltip.dart';
 import 'package:caculator_app/configs/configs.dart';
 import 'package:caculator_app/model/enum/enum.dart';
 import 'package:caculator_app/views/home_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -65,19 +68,21 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               },
               selector: (context, viewmodel) => viewmodel.operationString),
-          Selector<HomeViewModel, String>(
-              builder: (context, data, child) {
-                return Text(
-                  data,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(height: 0),
-                  textAlign: TextAlign.right,
-                  maxLines: 1,
-                );
-              },
-              selector: (context, viewmodel) => viewmodel.operationResult),
+          CustomTooltip(
+            data: context.read<HomeViewModel>().operationString,
+            child: Selector<HomeViewModel, String>(
+                builder: (context, data, child) {
+                  return Text(data,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(height: 0),
+                    textAlign: TextAlign.right,
+                    maxLines: 1,
+                  );
+                },
+                selector: (context, viewmodel) => viewmodel.operationResult),
+          ),
         ],
       ),
     );
