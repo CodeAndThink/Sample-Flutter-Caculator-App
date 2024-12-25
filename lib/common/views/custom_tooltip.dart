@@ -67,6 +67,7 @@ class CustomTooltipState extends State<CustomTooltip> {
                         const SnackBar(
                             content: Text(
                           'Copied!',
+                          style: TextStyle(color: Colors.white),
                         )),
                       );
                       _hideTooltip();
