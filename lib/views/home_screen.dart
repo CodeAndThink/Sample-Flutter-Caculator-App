@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           .bodyLarge
                           ?.copyWith(height: 0),
                       textAlign: TextAlign.right,
-                      maxLines: 1,
+                      maxLines: 2,
                     ),
                   );
                 },

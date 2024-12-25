@@ -62,10 +62,9 @@ class HomeViewModel extends ChangeNotifier {
 
   //Calculator Logic
   String evaluateExpression(String expr) {
-    expr =
-        expr.replaceAll('×', '*').replaceAll('÷', '/').replaceAll('%', '/100');
+    expr = expr.replaceAll('×', '*').replaceAll('÷', '/').replaceAll('%', '/100');
 
-    final regex = RegExp(r'(-?\d+(\.\d+)?|[\+\-\*\/])');
+    final regex = RegExp(r'(-?\d+(\.\d+)?|[\+\-\*\/\%])');
     List<String> tokens =
         regex.allMatches(expr).map((match) => match.group(0)!).toList();
 
