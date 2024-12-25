@@ -40,13 +40,6 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  //Theme Logic
-  void changeData() async {
-    await _dataManager.saveUserData(
-        operation_model.Operation(_operationString, _operationResult));
-    notifyListeners();
-  }
-
   //Insert Operator If Missing
   List<String> insertOperatorIfMissing(List<String> tokens) {
     List<String> result = [];
@@ -146,6 +139,7 @@ class HomeViewModel extends ChangeNotifier {
     try {
       final result = evaluateExpression(_operationString);
       _operationResult = ConverseNumber.converseToDefaultNumber(result);
+      _changeData();
     } catch (e) {
       _setError(e.toString());
     }
@@ -167,6 +161,7 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Data Inlitialization
   void _initialData() async {
     final lastOperation = await _dataManager.getUserData();
     _operationResult = lastOperation.operationResult;
@@ -174,9 +169,10 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  @override
-  void dispose() {
-    changeData();
-    super.dispose();
+  //Data Logic
+  void _changeData() async {
+    await _dataManager.saveUserData(
+        operation_model.Operation(_operationString, _operationResult));
+    notifyListeners();
   }
 }

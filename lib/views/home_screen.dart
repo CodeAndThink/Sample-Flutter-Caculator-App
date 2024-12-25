@@ -54,15 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Selector<HomeViewModel, String>(
               builder: (context, data, child) {
-                return Text(
-                  data,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: context.watch<HomeViewModel>().isDarkMode
-                          ? Configs.operatorColorDarkMode
-                          : Configs.operatorColorLightMode,
-                      height: 0),
-                  textAlign: TextAlign.right,
-                  maxLines: 2,
+                return FittedBox(
+                  child: Text(
+                    data,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: context.watch<HomeViewModel>().isDarkMode
+                            ? Configs.operatorColorDarkMode
+                            : Configs.operatorColorLightMode,
+                        height: 0),
+                    textAlign: TextAlign.right,
+                    maxLines: 2,
+                  ),
                 );
               },
               selector: (context, viewmodel) => viewmodel.operationString),
@@ -70,8 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             data: context.read<HomeViewModel>().operationResult,
             child: Selector<HomeViewModel, String>(
                 builder: (context, data, child) {
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
+                  return FittedBox(
                     child: Text(
                       data,
                       style: Theme.of(context)
@@ -229,6 +230,8 @@ class _HomeScreenState extends State<HomeScreen> {
         height: screenHeight * 0.09,
         child: ElevatedButton(
           onPressed: () {
+            // Provider.of<HomeViewModel>(context, listen: false)
+            //     .calculationAction();
             if (number == operationToDisplaySymbol(Operation.reset)) {
               Provider.of<HomeViewModel>(context, listen: false).resetAction();
             } else if (number == operationToDisplaySymbol(Operation.equal)) {
@@ -247,7 +250,8 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: WidgetStatePropertyAll(backgroundColor ??
                   (context.read<HomeViewModel>().isDarkMode
                       ? Configs.numberColorDarkMode
-                      : Configs.numberColorLightMode))),
+                      : Configs.numberColorLightMode)),
+              elevation: WidgetStateProperty.all(0)),
           child: Text(
             number,
             style: Theme.of(context)
@@ -269,6 +273,8 @@ class _HomeScreenState extends State<HomeScreen> {
         height: screenHeight * 0.09,
         child: ElevatedButton(
           onPressed: () {
+            // Provider.of<HomeViewModel>(context, listen: false)
+            //     .calculationAction();
             if (iconPath == operationToDisplaySymbol(Operation.delete)) {
               Provider.of<HomeViewModel>(context, listen: false).deleteAction();
             } else if (iconPath ==
@@ -287,7 +293,8 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: WidgetStatePropertyAll(backgroundColor ??
                   (context.read<HomeViewModel>().isDarkMode
                       ? Configs.numberColorDarkMode
-                      : Configs.numberColorLightMode))),
+                      : Configs.numberColorLightMode)),
+              elevation: WidgetStateProperty.all(0)),
           child: SvgPicture.asset(
             iconPath,
             height: 26,
