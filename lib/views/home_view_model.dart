@@ -134,14 +134,22 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Equal Action
+  void equalAction() {
+    _operationString = _operationResult;
+    notifyListeners();
+  }
+
   //Calculation Action
   void calculationAction() {
+    _operationResult = "0";
     try {
       final result = evaluateExpression(_operationString);
       _operationResult = ConverseNumber.converseToDefaultNumber(result);
       _changeData();
     } catch (e) {
       _setError(e.toString());
+      _operationResult = _operationString;
     }
     notifyListeners();
   }
@@ -151,7 +159,6 @@ class HomeViewModel extends ChangeNotifier {
   //Set Error
   void _setError(String message) {
     _error = message;
-    _operationResult = "Error";
     notifyListeners();
   }
 

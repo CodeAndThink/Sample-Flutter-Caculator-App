@@ -230,16 +230,16 @@ class _HomeScreenState extends State<HomeScreen> {
         height: screenHeight * 0.09,
         child: ElevatedButton(
           onPressed: () {
-            // Provider.of<HomeViewModel>(context, listen: false)
-            //     .calculationAction();
             if (number == operationToDisplaySymbol(Operation.reset)) {
               Provider.of<HomeViewModel>(context, listen: false).resetAction();
             } else if (number == operationToDisplaySymbol(Operation.equal)) {
               Provider.of<HomeViewModel>(context, listen: false)
-                  .calculationAction();
+                  .equalAction();
             } else {
               Provider.of<HomeViewModel>(context, listen: false)
                   .insertOperationAction(number);
+              Provider.of<HomeViewModel>(context, listen: false)
+                  .calculationAction();
             }
           },
           style: ButtonStyle(
@@ -273,8 +273,6 @@ class _HomeScreenState extends State<HomeScreen> {
         height: screenHeight * 0.09,
         child: ElevatedButton(
           onPressed: () {
-            // Provider.of<HomeViewModel>(context, listen: false)
-            //     .calculationAction();
             if (iconPath == operationToDisplaySymbol(Operation.delete)) {
               Provider.of<HomeViewModel>(context, listen: false).deleteAction();
             } else if (iconPath ==
@@ -284,6 +282,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Provider.of<HomeViewModel>(context, listen: false)
                   .insertOperationAction(iconPath);
             }
+            Provider.of<HomeViewModel>(context, listen: false)
+                .calculationAction();
           },
           style: ButtonStyle(
               shape: WidgetStateProperty.all<RoundedRectangleBorder>(
