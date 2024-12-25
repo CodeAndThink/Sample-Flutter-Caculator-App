@@ -1,7 +1,9 @@
+import 'package:caculator_app/manager/data_manager.dart';
 import 'package:caculator_app/manager/setting_manager.dart';
 import 'package:caculator_app/model/enum/enum.dart';
 import 'package:caculator_app/utils/converse_number.dart';
 import 'package:flutter/material.dart';
+import 'package:caculator_app/model/model/operation.dart' as operation_model;
 
 class HomeViewModel extends ChangeNotifier {
   //MARK: Properties
@@ -18,12 +20,15 @@ class HomeViewModel extends ChangeNotifier {
   String get error => _error;
 
   late SettingManager _settingManager;
+  late DataManager _dataManager;
 
   //MARK: Constructor
 
-  HomeViewModel(SettingManager settingManager) {
+  HomeViewModel(SettingManager settingManager, DataManager dataManager) {
     _settingManager = settingManager;
+    _dataManager = dataManager;
     _initialTheme();
+    _initialData();
   }
 
   //MARK: Puclic Methods
@@ -57,10 +62,9 @@ class HomeViewModel extends ChangeNotifier {
 
   //Calculator Logic
   String evaluateExpression(String expr) {
-    expr =
-        expr.replaceAll('×', '*').replaceAll('÷', '/').replaceAll('%', '/100');
+    expr = expr.replaceAll('×', '*').replaceAll('÷', '/').replaceAll('%', '/100');
 
-    final regex = RegExp(r'(-?\d+(\.\d+)?|[\+\-\*\/])');
+    final regex = RegExp(r'(-?\d+(\.\d+)?|[\+\-\*\/\%])');
     List<String> tokens =
         regex.allMatches(expr).map((match) => match.group(0)!).toList();
 
@@ -129,13 +133,22 @@ class HomeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  //Equal Action
+  void equalAction() {
+    _operationString = _operationResult;
+    notifyListeners();
+  }
+
   //Calculation Action
   void calculationAction() {
+    _operationResult = "0";
     try {
       final result = evaluateExpression(_operationString);
       _operationResult = ConverseNumber.converseToDefaultNumber(result);
+      _changeData();
     } catch (e) {
       _setError(e.toString());
+      _operationResult = _operationString;
     }
     notifyListeners();
   }
@@ -145,13 +158,27 @@ class HomeViewModel extends ChangeNotifier {
   //Set Error
   void _setError(String message) {
     _error = message;
-    _operationResult = "Error";
     notifyListeners();
   }
 
   //Theme Mode Initialization
   void _initialTheme() async {
     isDarkMode = await _settingManager.getUserThemeMode();
+    notifyListeners();
+  }
+
+  //Data Inlitialization
+  void _initialData() async {
+    final lastOperation = await _dataManager.getUserData();
+    _operationResult = lastOperation.operationResult;
+    _operationString = lastOperation.operationString;
+    notifyListeners();
+  }
+
+  //Data Logic
+  void _changeData() async {
+    await _dataManager.saveUserData(
+        operation_model.Operation(_operationString, _operationResult));
     notifyListeners();
   }
 }

@@ -54,15 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Selector<HomeViewModel, String>(
               builder: (context, data, child) {
-                return Text(
-                  data,
-                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: context.watch<HomeViewModel>().isDarkMode
-                          ? Configs.operatorColorDarkMode
-                          : Configs.operatorColorLightMode,
-                      height: 0),
-                  textAlign: TextAlign.right,
-                  maxLines: 2,
+                return FittedBox(
+                  child: Text(
+                    data,
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: context.watch<HomeViewModel>().isDarkMode
+                            ? Configs.operatorColorDarkMode
+                            : Configs.operatorColorLightMode,
+                        height: 0),
+                    textAlign: TextAlign.right,
+                    maxLines: 2,
+                  ),
                 );
               },
               selector: (context, viewmodel) => viewmodel.operationString),
@@ -70,8 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
             data: context.read<HomeViewModel>().operationResult,
             child: Selector<HomeViewModel, String>(
                 builder: (context, data, child) {
-                  return SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
+                  return FittedBox(
                     child: Text(
                       data,
                       style: Theme.of(context)
@@ -79,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           .bodyLarge
                           ?.copyWith(height: 0),
                       textAlign: TextAlign.right,
-                      maxLines: 1,
+                      maxLines: 2,
                     ),
                   );
                 },
@@ -233,10 +234,12 @@ class _HomeScreenState extends State<HomeScreen> {
               Provider.of<HomeViewModel>(context, listen: false).resetAction();
             } else if (number == operationToDisplaySymbol(Operation.equal)) {
               Provider.of<HomeViewModel>(context, listen: false)
-                  .calculationAction();
+                  .equalAction();
             } else {
               Provider.of<HomeViewModel>(context, listen: false)
                   .insertOperationAction(number);
+              Provider.of<HomeViewModel>(context, listen: false)
+                  .calculationAction();
             }
           },
           style: ButtonStyle(
@@ -247,7 +250,8 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: WidgetStatePropertyAll(backgroundColor ??
                   (context.read<HomeViewModel>().isDarkMode
                       ? Configs.numberColorDarkMode
-                      : Configs.numberColorLightMode))),
+                      : Configs.numberColorLightMode)),
+              elevation: WidgetStateProperty.all(0)),
           child: Text(
             number,
             style: Theme.of(context)
@@ -278,6 +282,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Provider.of<HomeViewModel>(context, listen: false)
                   .insertOperationAction(iconPath);
             }
+            Provider.of<HomeViewModel>(context, listen: false)
+                .calculationAction();
           },
           style: ButtonStyle(
               shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -287,7 +293,8 @@ class _HomeScreenState extends State<HomeScreen> {
               backgroundColor: WidgetStatePropertyAll(backgroundColor ??
                   (context.read<HomeViewModel>().isDarkMode
                       ? Configs.numberColorDarkMode
-                      : Configs.numberColorLightMode))),
+                      : Configs.numberColorLightMode)),
+              elevation: WidgetStateProperty.all(0)),
           child: SvgPicture.asset(
             iconPath,
             height: 26,
