@@ -85,15 +85,24 @@ class CustomTooltipState extends State<CustomTooltip> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () => _showTooltip(),
-      child: Material(
-        color: Colors.transparent,
-        child: InkWell(
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
             onTap: () {},
             splashColor:
                 Theme.of(context).colorScheme.secondary.withOpacity(0.10),
             highlightColor:
                 Theme.of(context).colorScheme.secondary.withOpacity(0.05),
-            child: widget.child),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: widget.child,
+            ),
+          ),
+        ),
       ),
     );
   }

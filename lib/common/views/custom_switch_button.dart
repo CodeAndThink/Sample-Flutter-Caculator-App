@@ -1,4 +1,7 @@
+import 'package:caculator_app/common/views/custom_icon_button.dart';
 import 'package:caculator_app/configs/configs.dart';
+import 'package:caculator_app/views/history/history_screen.dart';
+import 'package:caculator_app/views/theme/theme_settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -23,6 +26,7 @@ class CustomSwitchButton extends StatefulWidget {
 class CustomSwitchButtonState extends State<CustomSwitchButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  OverlayEntry? _overlayEntry;
 
   @override
   void initState() {
@@ -51,11 +55,88 @@ class CustomSwitchButtonState extends State<CustomSwitchButton>
     super.dispose();
   }
 
+  void _showOverlay(BuildContext context) {
+    final overlay = Overlay.of(context);
+
+    _overlayEntry = OverlayEntry(
+      builder: (context) {
+        return GestureDetector(
+          onTap: _hideOverlay,
+          child: Stack(
+            children: [
+              Container(
+                color: Colors.black54,
+              ),
+              Positioned(
+                top: 100,
+                left: 0,
+                right: 0,
+                child: Material(
+                  color: Colors.transparent,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surface,
+                            shape: BoxShape.circle),
+                        child: CustomIconButton(
+                          imageUrl: 'assets/icons/history.png',
+                          action: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const HistoryScreen()));
+                            _hideOverlay();
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 6,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.surface,
+                            shape: BoxShape.circle),
+                        child: CustomIconButton(
+                          imageUrl: 'assets/icons/theme.png',
+                          action: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ThemeSettingsScreen()));
+                            _hideOverlay();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    overlay.insert(_overlayEntry!);
+  }
+
+  void _hideOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         widget.onChanged(!widget.value);
+      },
+      onLongPressEnd: (_) {
+        _showOverlay(context);
       },
       child: Container(
         width: 72.0,

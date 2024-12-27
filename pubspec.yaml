@@ -43,3 +43,5 @@ flutter:
     - assets/icons/multi.svg
     - assets/icons/sun.svg
     - assets/icons/moon.svg
+    - assets/icons/history.png
+    - assets/icons/theme.png

@@ -5,6 +5,9 @@ class Configs {
   static const Color subActionButtonColorLightMode = Color(0xFFd2d3da);
   static const Color subActionButtonColorDarkMode = Color(0xFF4e5060);
 
+  static const Color appBarShadowColorLightMode = Color(0xFFd2d3da);
+  static const Color appBarShadowColorDarkMode = Color(0xFF4e5060);
+
   static const Color inactiveTrackColor = Color(0xFF2E2F38);
   static const Color activeTrackColor = Colors.white;
 
