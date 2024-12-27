@@ -181,7 +181,8 @@ class HomeViewModel extends ChangeNotifier {
 
   //Data Inlitialization
   void _initialData() async {
-    final lastOperation = await _dataManager.getUserData();
+    final history = await _dataManager.getHistoryOperations();
+    final lastOperation = history.last;
     _operationResult = lastOperation.operationResult;
     _operationString = lastOperation.operationString;
     notifyListeners();
@@ -189,7 +190,7 @@ class HomeViewModel extends ChangeNotifier {
 
   //Data Logic
   void _changeData() async {
-    await _dataManager.saveUserData(
+    await _dataManager.saveHistoryOperation(
         operation_model.Operation(_operationString, _operationResult));
     notifyListeners();
   }

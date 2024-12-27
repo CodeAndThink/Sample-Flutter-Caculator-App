@@ -1,3 +1,5 @@
 import 'package:flutter/material.dart';
 
-class HistoryViewModel extends ChangeNotifier {}
+class HistoryViewModel extends ChangeNotifier {
+  
+}
