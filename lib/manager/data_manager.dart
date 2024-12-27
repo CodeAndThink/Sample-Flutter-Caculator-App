@@ -24,7 +24,7 @@ class DataManager {
   Future<List<Operation>> getHistoryOperations() async {
     final operationsJson = await _storage.read(key: "operationHistory");
     if (operationsJson == null) {
-      return [Operation("0", "0")];
+      return [Operation("0", "0", DateTime.now().toIso8601String())];
     }
     final List<dynamic> operationsList = jsonDecode(operationsJson);
     return operationsList.map((e) => Operation.fromJson(e)).toList();

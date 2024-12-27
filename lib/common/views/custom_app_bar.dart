@@ -14,15 +14,18 @@ class CustomAppBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.arrow_back_ios_new_rounded)),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back_ios_new_rounded),
+          ),
           Text(
             title,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.headlineSmall,
           ),
-          IconButton(onPressed: rightButtonAction, icon: const Icon(Icons.add)),
+          const SizedBox(
+            width: 48,
+          ),
         ],
       ),
     );

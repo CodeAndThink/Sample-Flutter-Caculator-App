@@ -190,8 +190,8 @@ class HomeViewModel extends ChangeNotifier {
 
   //Data Logic
   void _changeData() async {
-    await _dataManager.saveHistoryOperation(
-        operation_model.Operation(_operationString, _operationResult));
+    await _dataManager.saveHistoryOperation(operation_model.Operation(
+        _operationString, _operationResult, DateTime.now().toIso8601String()));
     notifyListeners();
   }
 }
