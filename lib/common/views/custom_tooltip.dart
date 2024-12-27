@@ -1,5 +1,5 @@
 import 'package:caculator_app/configs/configs.dart';
-import 'package:caculator_app/views/home_view_model.dart';
+import 'package:caculator_app/views/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -85,7 +85,16 @@ class CustomTooltipState extends State<CustomTooltip> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onLongPress: () => _showTooltip(),
-      child: widget.child,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+            onTap: () {},
+            splashColor:
+                Theme.of(context).colorScheme.secondary.withOpacity(0.10),
+            highlightColor:
+                Theme.of(context).colorScheme.secondary.withOpacity(0.05),
+            child: widget.child),
+      ),
     );
   }
 }

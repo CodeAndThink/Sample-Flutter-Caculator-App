@@ -2,7 +2,8 @@ import 'package:caculator_app/common/views/custom_switch_button.dart';
 import 'package:caculator_app/common/views/custom_tooltip.dart';
 import 'package:caculator_app/configs/configs.dart';
 import 'package:caculator_app/model/enum/enum.dart';
-import 'package:caculator_app/views/home_view_model.dart';
+import 'package:caculator_app/views/home/home_view_model.dart';
+import 'package:caculator_app/views/settings/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -57,11 +58,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 return FittedBox(
                   child: Text(
                     data,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: context.watch<HomeViewModel>().isDarkMode
-                            ? Configs.operatorColorDarkMode
-                            : Configs.operatorColorLightMode,
-                        height: 0),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium
+                        ?.copyWith(
+                            color: context.watch<HomeViewModel>().isDarkMode
+                                ? Configs.operatorColorDarkMode
+                                : Configs.operatorColorLightMode,
+                            height: 0),
                     textAlign: TextAlign.right,
                     maxLines: 2,
                   ),
@@ -233,8 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
             if (number == operationToDisplaySymbol(Operation.reset)) {
               Provider.of<HomeViewModel>(context, listen: false).resetAction();
             } else if (number == operationToDisplaySymbol(Operation.equal)) {
-              Provider.of<HomeViewModel>(context, listen: false)
-                  .equalAction();
+              Provider.of<HomeViewModel>(context, listen: false).equalAction();
             } else {
               Provider.of<HomeViewModel>(context, listen: false)
                   .insertOperationAction(number);

@@ -1,8 +1,8 @@
 import 'package:caculator_app/manager/data_manager.dart';
 import 'package:caculator_app/manager/setting_manager.dart';
 import 'package:caculator_app/theme/theme.dart';
-import 'package:caculator_app/views/home_screen.dart';
-import 'package:caculator_app/views/home_view_model.dart';
+import 'package:caculator_app/views/home/home_screen.dart';
+import 'package:caculator_app/views/home/home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
