@@ -60,9 +60,21 @@ class HomeViewModel extends ChangeNotifier {
     return result;
   }
 
+  //Replace all displayed operators before calculation
+  String replaceWithSuitableOperation(String input) {
+    if (input.endsWith('%')) {
+      input = input.replaceAll('%', '/100');
+    } else {
+      input = input.replaceAll('%', '/100*');
+    }
+    input = input.replaceAll('×', '*').replaceAll('÷', '/');
+
+    return input;
+  }
+
   //Calculator Logic
   String evaluateExpression(String expr) {
-    expr = expr.replaceAll('×', '*').replaceAll('÷', '/').replaceAll('%', '/100');
+    expr = replaceWithSuitableOperation(expr);
 
     final regex = RegExp(r'(-?\d+(\.\d+)?|[\+\-\*\/\%])');
     List<String> tokens =
