@@ -14,7 +14,13 @@ class _ThemeSettingsScreenState extends State<ThemeSettingsScreen> {
     return Scaffold(
       body: SafeArea(
         child: Stack(
-          children: [CustomAppBar(title: 'Theme', rightButtonAction: () {})],
+          children: [
+            CustomAppBar(
+              title: 'Theme',
+              rightButtonAction: () {},
+              enableRightButton: true,
+            )
+          ],
         ),
       ),
     );

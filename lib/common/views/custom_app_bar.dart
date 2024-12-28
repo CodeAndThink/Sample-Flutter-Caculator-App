@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
   const CustomAppBar(
-      {super.key, required this.title, required this.rightButtonAction});
+      {super.key,
+      required this.title,
+      required this.rightButtonAction,
+      this.enableRightButton = false});
   final String title;
   final VoidCallback rightButtonAction;
+  final bool enableRightButton;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +27,14 @@ class CustomAppBar extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.headlineSmall,
           ),
-          const SizedBox(
-            width: 48,
-          ),
+          enableRightButton
+              ? IconButton(
+                  onPressed: rightButtonAction,
+                  icon: const Icon(Icons.add),
+                )
+              : const SizedBox(
+                  width: 48,
+                )
         ],
       ),
     );
